@@ -67,8 +67,6 @@ int main(int argc, char *argv[])
         // print array before
         printArray(arr, n);
 
-        omp_set_num_threads(12);
-
         double t1 = omp_get_wtime();
 
         // do merges
