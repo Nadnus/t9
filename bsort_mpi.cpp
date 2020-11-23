@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <openmpi/mpi.h>
 
 int compar(const void *a, const void *b)
@@ -33,8 +34,8 @@ int find_bucket(double num, int p_num)
 int main(int argc, char *argv[])
 {
     int rank, size;
-    int N = 100000;
-
+    for (long N = 1; N < 100000; N = N * 2)
+    {
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -109,10 +110,13 @@ int main(int argc, char *argv[])
 
     double t2 = MPI_Wtime();
 
+    std::ofstream myfile;
+    myfile.open ("bsort_mpi.txt",std::ios::app);
     if (rank == 0)
     {
-        printf("Tiempo: %f\n", t2 - t1);
+        myfile << t2 - t1<< std::endl;
     }
-
+    myfile.close();
     MPI_Finalize();
+    }
 }

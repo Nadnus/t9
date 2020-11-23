@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <omp.h>
 
 using namespace std;
@@ -39,10 +40,14 @@ int main(int argc, char *argv[])
         array[i] = x;
     }
 
+    double t1 = omp_get_wtime();
     bucketSort(array, n);
-
-    cout << "Sorted array is \n";
+    double t2 = omp_get_wtime();
+    ofstream myfile;
+    myfile.open ("log.txt",std::ios::app);
+    myfile << "Sorted array is \n";
     for (int i = 0; i < n; i++)
-        cout << array[i] << " ";
+        myfile << array[i] << " ";
+    myfile << "bsort_omp time is:" <<(t2-t1)<<" for n = ";
     return 0;
 }
